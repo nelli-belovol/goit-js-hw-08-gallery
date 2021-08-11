@@ -94,9 +94,15 @@ const lightBoxImage = document.querySelector('.lightbox__image');
 const lightBoxBtn = document.querySelector('[data-action="close-lightbox"]');
 
 gallery.addEventListener('click', e => {
+  e.preventDefault();
   const url = e.target.dataset.source;
-
+  console.dir(e.target);
   lightBox.classList.add('is-open');
 
   lightBoxImage.setAttribute('src', url);
+});
+
+lightBoxBtn.addEventListener('click', e => {
+  lightBox.classList.remove('is-open');
+  lightBoxImage.setAttribute('src', '');
 });
