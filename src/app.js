@@ -88,16 +88,15 @@ function addItems(arr) {
   gallery.append(...arrItems);
 }
 addItems(galleryItems);
-console.log(gallery);
-const lightBoxButton = document.querySelector('.lightbox');
+
+const lightBox = document.querySelector('.lightbox');
+const lightBoxImage = document.querySelector('.lightbox__image');
+const lightBoxBtn = document.querySelector('[data-action="close-lightbox"]');
 
 gallery.addEventListener('click', e => {
-  lightBoxButton.classList.add('is-open');
-  console.log(e.target);
-  // const target = e.target;
-  // const url = target.dataset.source;
-  // console.log(url);
-  // const lightboxImage = document.querySelector('.lightbox__image');
-  // console.log(lightboxImage);
-  // lightboxImage.setAttribute('src', original);
+  const url = e.target.dataset.source;
+
+  lightBox.classList.add('is-open');
+
+  lightBoxImage.setAttribute('src', url);
 });
