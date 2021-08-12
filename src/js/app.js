@@ -1,4 +1,4 @@
-const galleryItems = [
+export const galleryItems = [
   {
     preview:
       'https://cdn.pixabay.com/photo/2019/05/14/16/43/himilayan-blue-poppy-4202825__340.jpg',
@@ -63,46 +63,3 @@ const galleryItems = [
     description: 'Lighthouse Coast Sea',
   },
 ];
-
-const gallery = document.querySelector('.js-gallery');
-
-function addItems(arr) {
-  const arrItems = [];
-  arr.map(item => {
-    const { preview, original, description } = item;
-    const galleryItem = document.createElement('li');
-    const galleryItemLink = document.createElement('a');
-    const galleryItemImg = document.createElement('img');
-    galleryItem.classList.add('gallery__item');
-    galleryItemLink.classList.add('gallery__link');
-    galleryItemImg.classList.add('gallery__image');
-    galleryItemLink.setAttribute('href', original);
-    galleryItemImg.setAttribute('src', preview);
-    galleryItemImg.setAttribute('data-source', original);
-    galleryItemImg.setAttribute('alt', description);
-    galleryItemLink.append(galleryItemImg);
-    galleryItem.append(galleryItemLink);
-    arrItems.push(galleryItem);
-  });
-
-  gallery.append(...arrItems);
-}
-addItems(galleryItems);
-
-const lightBox = document.querySelector('.lightbox');
-const lightBoxImage = document.querySelector('.lightbox__image');
-const lightBoxBtn = document.querySelector('[data-action="close-lightbox"]');
-
-gallery.addEventListener('click', e => {
-  e.preventDefault();
-  const url = e.target.dataset.source;
-  console.dir(e.target);
-  lightBox.classList.add('is-open');
-
-  lightBoxImage.setAttribute('src', url);
-});
-
-lightBoxBtn.addEventListener('click', e => {
-  lightBox.classList.remove('is-open');
-  lightBoxImage.setAttribute('src', '');
-});
