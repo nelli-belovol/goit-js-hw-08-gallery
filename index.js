@@ -7,9 +7,8 @@ let currentImg;
 
 function addItems(arr) {
   const arrItems = [];
-  let index = 0;
+
   arr.map(item => {
-    index = index + 1;
     const { preview, original, description } = item;
     const galleryItem = document.createElement('li');
     const galleryItemLink = document.createElement('a');
@@ -21,7 +20,6 @@ function addItems(arr) {
     galleryItemImg.setAttribute('src', preview);
     galleryItemImg.setAttribute('data-source', original);
     galleryItemImg.setAttribute('alt', description);
-    galleryItemImg.setAttribute('id', index);
     galleryItemLink.append(galleryItemImg);
     galleryItem.append(galleryItemLink);
     arrItems.push(galleryItem);
@@ -62,32 +60,29 @@ window.addEventListener('keydown', e => {
   }
 });
 
-// const allImg = document.querySelectorAll('ul img');
-
-// const images = Array(allImg);
-
-// function getUrl(arr) {
-//   for (let i = 1; i <= images.length; i++) {
-
-//   }
-// }
-
-// getUrl(images);
-
 document.addEventListener('keydown', e => {
-  // const allImg = document.querySelectorAll('ul img');
-  // console.log(allImg);
-  // const images = Array(allImg);
-  // console.log(images);
-  let currentIdx = Number(currentImg.attributes.id.nodeValue);
-  currentIdx = currentIdx + 1;
-  let nextImg;
-  let nextUrl;
-  console.log(currentIdx);
+  let currentIndex = 0;
+  galleryItems.forEach(img => {
+    if (img.original === lightBoxImage.src) {
+      currentIndex = galleryItems.indexOf(img);
+      console.log(currentIndex);
+    }
+  });
+
+  let nextIndex = currentIndex + 1;
+  let previousIndex = currentIndex - 1;
   if (e.code === 'ArrowRight') {
-    nextImg = document.getElementById(currentIdx);
-    nextUrl = nextImg.dataset.source;
-    lightBoxImage.setAttribute('src', nextUrl);
+    if (nextIndex >= galleryItems.length) {
+      nextIndex = 0;
+    }
+    refs.lightBoxImage.src = galleryItems[nextIndex].original;
+  }
+  if (e.code === 'ArrowLeft') {
+    if (previousIndex < 0) {
+      previousIndex = galleryItems.length - 1;
+    }
+    refs.lightBoxImage.src = galleryItems[previousIndex].original;
   }
 });
+
 // не забыть снять слушателей
