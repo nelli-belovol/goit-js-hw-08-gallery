@@ -29,7 +29,7 @@ function addItems(arr) {
 }
 addItems(galleryItems);
 
-gallery.addEventListener('click', e => {
+function openModal(e) {
   currentImg = e.target;
   if (currentImg.nodeName === 'IMG') {
     e.preventDefault();
@@ -38,11 +38,14 @@ gallery.addEventListener('click', e => {
 
     lightBoxImage.setAttribute('src', url);
   }
-});
+}
+
+gallery.addEventListener('click', openModal);
 
 function closeModal() {
   lightBox.classList.remove('is-open');
   lightBoxImage.setAttribute('src', '');
+  gallery.removeEventListener('click', openModal);
 }
 
 lightBox.addEventListener('click', e => {
@@ -60,7 +63,7 @@ window.addEventListener('keydown', e => {
   }
 });
 
-document.addEventListener('keydown', e => {
+function handleKeydown(e) {
   let currentIndex = 0;
   galleryItems.forEach(img => {
     if (img.original === lightBoxImage.src) {
@@ -83,6 +86,6 @@ document.addEventListener('keydown', e => {
     }
     refs.lightBoxImage.src = galleryItems[previousIndex].original;
   }
-});
+}
 
-// не забыть снять слушателей
+document.addEventListener('keydown', handleKeydown);
