@@ -38,6 +38,9 @@ function openModal(e) {
 
     lightBoxImage.setAttribute('src', url);
   }
+  lightBox.addEventListener('click', closeModalbyClick);
+  window.addEventListener('keydown', closeModalByKey);
+  document.addEventListener('keydown', handleKeydown);
 }
 
 gallery.addEventListener('click', openModal);
@@ -45,30 +48,31 @@ gallery.addEventListener('click', openModal);
 function closeModal() {
   lightBox.classList.remove('is-open');
   lightBoxImage.setAttribute('src', '');
-  gallery.removeEventListener('click', openModal);
+  lightBox.removeEventListener('click', closeModalbyClick);
+  window.removeEventListener('keydown', closeModalByKey);
+  document.removeEventListener('keydown', handleKeydown);
 }
 
-lightBox.addEventListener('click', e => {
+function closeModalbyClick(e) {
   if (
     e.target.classList.contains('lightbox__overlay') ||
     e.target.classList.contains('lightbox__button')
   ) {
     closeModal();
   }
-});
+}
 
-window.addEventListener('keydown', e => {
+function closeModalByKey(e) {
   if (e.code === 'Escape') {
     closeModal();
   }
-});
+}
 
 function handleKeydown(e) {
   let currentIndex = 0;
   galleryItems.forEach(img => {
     if (img.original === lightBoxImage.src) {
       currentIndex = galleryItems.indexOf(img);
-      console.log(currentIndex);
     }
   });
 
@@ -87,5 +91,3 @@ function handleKeydown(e) {
     refs.lightBoxImage.src = galleryItems[previousIndex].original;
   }
 }
-
-document.addEventListener('keydown', handleKeydown);
